@@ -1,0 +1,53 @@
+>> PCL github clone太慢，从https://gitcode.net/mirrors/pointcloudlibrary/pcl?utm_source=csdn_github_accelerator镜像下载
+
+>> PCL cmake ..报错
+  Boost version: 1.65.1
+
+  Boost include path: /usr/include
+
+  Could not find the following Boost libraries:
+
+          boost_filesystem
+          boost_iostreams
+          boost_system
+
+  Some (but not all) of the required Boost libraries were found.  You may
+  need to install these additional Boost libraries.  Alternatively, set
+  BOOST_LIBRARYDIR to the directory containing Boost libraries or BOOST_ROOT
+  to the location of Boost.
+Call Stack (most recent call first):
+  cmake/pcl_find_boost.cmake:33 (find_package)
+  CMakeLists.txt:417 (include)
+
+用locate命令能搜索到/usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1
+尝试添加set(BOOST_LIBRARYDIR /usr/lib)
+及修改pcl_find_boost.cmake中find_package(Boost 1.65.0 REQUIRED COMPONENTS ${BOOST_REQUIRED_MODULES})为find_package(Boost 1.65.1 REQUIRED COMPONENTS ${BOOST_REQUIRED_MODULES})
+仍无法解决问题
+将/usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1软链接到/usr/lib/x86_64-linux-gnu/libboost_system.so，其他的库也效仿，解决问题
+
+>> PCL cmake ..报错
+CMake Error at cmake/pcl_targets.cmake:301 (add_executable):
+  Target "pcl_icp" links to target "Boost::regex" but the target was not
+  found.  Perhaps a find_package() call is missing for an IMPORTED target, or
+  an ALIAS target is missing?
+
+添加regex到pcl_find_boost.cmake中的set(BOOST_REQUIRED_MODULES filesystem iostreams system regex)
+出现新的报错：
+Could not find the following Boost libraries:
+
+          boost_regex
+
+需单独安装boost_regex模块：
+1：下载boost源文件(注意和自己安装的boost库对应)。
+
+https://www.boost.org/users/history/
+
+解包后进入到根目录。
+
+2：./bootstrap.sh --with-libraries=regex
+
+3：./bjam install
+
+完成后还是报之前的错。原因是regex相关库被安装到了/usr/local/lib下，需要拷贝到和其他的libboost库在一起才行。例如我的电脑上是在/usr/lib/x86_64-linux-gnu/。
+cp libboost_regex* /usr/lib/x86_64-linux-gnu/
+问题解决

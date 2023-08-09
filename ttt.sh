@@ -1,0 +1,1 @@
+echo swdwi >> aaa.txt

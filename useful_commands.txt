@@ -1,0 +1,51 @@
+>>割草机更新库
+adb连接好之后
+进入机器：adb shell
+	cd /data/usr/lib/node/
+本地电脑：adb push liberos_node_vslam.so /data/usr/lib/node/
+在两边输入md5sum liberos_node_vslam.so看md5码是否一致，以确认是否成功推上
+机器端：
+杀掉当前正在运行的程序 killall deebot
+rm /tmp/deebot_kill_upload_log.mark
+启动新配置路径的程序 /data/autostart/deebot.sh start
+
+>>ffmpeg安装
+sudo apt-get update
+sudo apt-get install ffmpeg
+
+>>目录下搜索（代码中）关键字
+grep "onStartReq" -r .
+
+>>PCL保存点云
+#include <pcl/point_types.h>
+#include <pcl/point_cloud.h>
+#include <pcl/io/pcd_io.h>
+
+pcl::PointCloud<pcl::PointXYZ>::Ptr pGlobalPointCloud = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>);
+
+for(点云的每个点 ps : 结构体的点云)
+{
+  pcl::PointXYZ p;
+  p.x = pos(ps.x);
+  p.y = pos(ps.y);
+  p.z = pos(ps.z);
+  pPointCloud->points.push_back(p);
+}
+
+pGlobalPointCloud->height = 1;
+pGlobalPointCloud->width = pGlobalPointCloud->points.size();
+
+pcl::io::savePCDFile(filename, *pGlobalPointCloud);
+
+CMakeists.txt中：
+find_package(PCL REQUIRED)
+include_directories(
+${PCL_INCLUDE_DIRS}
+)
+target_link_libraries(可执行文件名
+${PCL_LIBRARIES}
+)
+
+>>查看二进制文件/其他文件的二进制形式内容
+hexdump $文件名
+hexdump $文件名 | more          显示开头，逐渐翻页
