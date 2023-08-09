@@ -1,0 +1,108 @@
+<mxfile host="Electron" modified="2023-07-27T07:08:03.854Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.5 Chrome/114.0.5735.243 Electron/25.3.1 Safari/537.36" etag="Y0nW8QvUMsu9_dLCh5Z7" version="21.6.5" type="device">
+  <diagram name="Page-1" id="C8StE6J3O8cy_6mSTfym">
+    <mxGraphModel dx="1367" dy="852" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-3" value="" style="line;strokeWidth=2;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="210" y="250" width="380" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-4" value="" style="line;strokeWidth=2;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="210" y="380" width="380" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-5" value="" style="line;strokeWidth=2;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="210" y="510" width="380" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-6" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#00FF00;strokeColor=#336600;" vertex="1" parent="1">
+          <mxGeometry x="260" y="380" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-7" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFF00;strokeColor=#FF8000;" vertex="1" parent="1">
+          <mxGeometry x="320" y="510" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-10" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#33FFFF;strokeColor=#000099;" vertex="1" parent="1">
+          <mxGeometry x="370" y="250" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-12" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;fillColor=#fff2cc;strokeColor=#666666;" edge="1" parent="1" source="0eI2T8WSixiUBaCBsoSO-6" target="0eI2T8WSixiUBaCBsoSO-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="450" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-13" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;strokeColor=#666666;" edge="1" parent="1" source="0eI2T8WSixiUBaCBsoSO-7" target="0eI2T8WSixiUBaCBsoSO-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="450" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-29" value="存在VSLAM数据获取时刻到&lt;br&gt;定位结果发送时刻的时间延迟&lt;br&gt;使用码盘数据进行融合修正" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="0eI2T8WSixiUBaCBsoSO-13">
+          <mxGeometry x="0.5887" y="-2" relative="1" as="geometry">
+            <mxPoint x="23" y="128" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-14" value="码盘&lt;br&gt;prediction pose" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="85" y="365" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-15" value="VSLAM pose" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="90" y="500" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-16" value="融合定位结果&lt;br&gt;最终使用的定位" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="80" y="235" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-19" value="RGB图像" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="210" y="568" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-20" value="IMU数据" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="310" y="568" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-21" value="UWB数据" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="405" y="568" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-22" value="GPS数据" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="510" y="568" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-23" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.514;exitY=-0.033;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=1;entryDx=0;entryDy=0;strokeColor=#808080;" edge="1" parent="1" source="0eI2T8WSixiUBaCBsoSO-19" target="0eI2T8WSixiUBaCBsoSO-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="450" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-24" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.471;exitY=-0.067;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=1;entryDx=0;entryDy=0;strokeColor=#666666;" edge="1" parent="1" source="0eI2T8WSixiUBaCBsoSO-22" target="0eI2T8WSixiUBaCBsoSO-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="450" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-25" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.488;exitY=0.067;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=1;entryDx=0;entryDy=0;strokeColor=#666666;" edge="1" parent="1" source="0eI2T8WSixiUBaCBsoSO-21" target="0eI2T8WSixiUBaCBsoSO-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="450" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-26" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.514;exitY=-0.033;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#666666;" edge="1" parent="1" source="0eI2T8WSixiUBaCBsoSO-20" target="0eI2T8WSixiUBaCBsoSO-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="450" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-27" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;定位Time Line&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="310" y="160" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-30" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#00FF00;strokeColor=#336600;" vertex="1" parent="1">
+          <mxGeometry x="295" y="380" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-31" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#00FF00;strokeColor=#336600;" vertex="1" parent="1">
+          <mxGeometry x="330" y="380" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-32" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#00FF00;strokeColor=#336600;" vertex="1" parent="1">
+          <mxGeometry x="365" y="380" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="0eI2T8WSixiUBaCBsoSO-34" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#666666;" edge="1" parent="1" source="0eI2T8WSixiUBaCBsoSO-32" target="0eI2T8WSixiUBaCBsoSO-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="460" as="sourcePoint" />
+            <mxPoint x="450" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
