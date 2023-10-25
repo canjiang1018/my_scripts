@@ -1,4 +1,6 @@
->> PCL github clone太慢，从https://gitcode.net/mirrors/pointcloudlibrary/pcl?utm_source=csdn_github_accelerator镜像下载
+>> PCL github clone太慢，从https://gitcode.net/mirrors/pointcloudlibrary/pcl.git镜像下载
+
+
 
 >> PCL cmake ..报错
   Boost version: 1.65.1
@@ -24,6 +26,8 @@ Call Stack (most recent call first):
 及修改pcl_find_boost.cmake中find_package(Boost 1.65.0 REQUIRED COMPONENTS ${BOOST_REQUIRED_MODULES})为find_package(Boost 1.65.1 REQUIRED COMPONENTS ${BOOST_REQUIRED_MODULES})
 仍无法解决问题
 将/usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1软链接到/usr/lib/x86_64-linux-gnu/libboost_system.so，其他的库也效仿，解决问题
+
+
 
 >> PCL cmake ..报错
 CMake Error at cmake/pcl_targets.cmake:301 (add_executable):
@@ -51,3 +55,170 @@ https://www.boost.org/users/history/
 完成后还是报之前的错。原因是regex相关库被安装到了/usr/local/lib下，需要拷贝到和其他的libboost库在一起才行。例如我的电脑上是在/usr/lib/x86_64-linux-gnu/。
 cp libboost_regex* /usr/lib/x86_64-linux-gnu/
 问题解决
+
+
+
+>> PCL cmake警告找不到vtk：
+-- The imported target "vtk" references the file
+   "/usr/bin/vtk"
+but this file does not exist.  Possible reasons include:
+* The file was deleted, renamed, or moved to another location.
+* An install or uninstall procedure did not complete successfully.
+* The installation package was faulty and contained
+   "/usr/lib/cmake/vtk-6.2/VTKTargets.cmake"
+but not all the files it references.
+
+因为Ubuntu下，vtk是vtk6，所以创建 vtk6到vtk的软连接即可:
+sudo ln -s /usr/bin/vtk6 /usr/bin/vtk
+
+
+
+>> PCL cmake报错
+CMake Error at cmake/pcl_find_vtk.cmake:96 (message):
+  Missing vtk modules: vtkRenderingOpenGL2;vtkRenderingContextOpenGL2
+Call Stack (most recent call first):
+  CMakeLists.txt:392 (include)
+
+发现/usr/lib下是libvtkRenderingOpenGL-6.3.so而非libvtkRenderingOpenGL2-版本号.so。需要重新安装使用opengl2版本的vtk
+
+
+
+>> PCL cmake报错vtk相关
+不需要用到UI可视化的话，修改CMakeLists.txt文件，不编译/注释掉vtk相关的代码就好
+
+
+
+>> 编译eroc_node_clean模块时PCL和libEcovacs冲突
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: error: expected unqualified-id before ‘int’
+ #define BOOL int
+              ^
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: note: in definition of macro ‘BOOL’
+ #define BOOL int
+              ^~~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: error: expected unqualified-id before ‘int’
+ #define BOOL int
+              ^
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: note: in definition of macro ‘BOOL’
+ #define BOOL int
+              ^~~
+In file included from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/memory.h:46:0,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/impl/point_types.hpp:41,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/point_types.h:354,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/TaskCleanNode.h:6,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/nodeloader.cpp:10:
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/type_traits.h:84:81: error: expected ‘;’ at end of member declaration
+     template<> struct asEnum<bool>          { static const std::uint8_t value = detail::PointFieldTypes::BOOL; };
+                                                                                 ^~~~~~
+In file included from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/CleanData.h:132:0,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/TaskCleanNode.h:3,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/nodeloader.cpp:10:
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: error: declaration does not declare anything [-fpermissive]
+ #define BOOL int
+              ^
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: note: in definition of macro ‘BOOL’
+ #define BOOL int
+              ^~~
+In file included from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/memory.h:46:0,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/impl/point_types.hpp:41,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/point_types.h:354,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/TaskCleanNode.h:6,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/nodeloader.cpp:10:
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/type_traits.h:101:59: error: template argument 1 is invalid
+     template<> struct asType<detail::PointFieldTypes::BOOL>    { using type = bool; };
+                                                           ^
+In file included from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/CleanData.h:132:0,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/TaskCleanNode.h:3,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/nodeloader.cpp:10:
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: error: expected identifier before ‘int’
+ #define BOOL int
+              ^
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: note: in definition of macro ‘BOOL’
+ #define BOOL int
+              ^~~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: error: expected ‘}’ before ‘int’
+ #define BOOL int
+              ^
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libEcovacs/typeCast.h:4:14: note: in definition of macro ‘BOOL’
+ #define BOOL int
+              ^~~
+In file included from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/impl/point_types.hpp:43:0,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/point_types.h:354,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/TaskCleanNode.h:6,
+                 from /home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/src/nodeloader.cpp:10:
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:20:33: error: expected unqualified-id before ‘=’ token
+     enum PointFieldTypes { BOOL = traits::asEnum_v<bool>,
+                                 ^
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:32:3: error: expected unqualified-id before ‘public’
+   public:
+   ^~~~~~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:37:28: error: ‘PCLPointField’ does not name a type
+   using PCLPointFieldPtr = PCLPointField::Ptr;
+                            ^~~~~~~~~~~~~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:38:33: error: ‘PCLPointField’ does not name a type
+   using PCLPointFieldConstPtr = PCLPointField::ConstPtr;
+                                 ^~~~~~~~~~~~~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h: In function ‘std::ostream& operator<<(std::ostream&, const pcl::PCLPointField&)’:
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:48:12: error: ‘INT8’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::INT8: s << "  INT8" << std::endl; break;
+            ^~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:49:12: error: ‘UINT8’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::UINT8: s << "  UINT8" << std::endl; break;
+            ^~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:50:12: error: ‘INT16’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::INT16: s << "  INT16" << std::endl; break;
+            ^~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:51:12: error: ‘UINT16’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::UINT16: s << "  UINT16" << std::endl; break;
+            ^~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:52:12: error: ‘INT32’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::INT32: s << "  INT32" << std::endl; break;
+            ^~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:53:12: error: ‘UINT32’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::UINT32: s << "  UINT32" << std::endl; break;
+            ^~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:54:12: error: ‘FLOAT32’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::FLOAT32: s << "  FLOAT32" << std::endl; break;
+            ^~
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_node_clean/dependence/include/pcl/PCLPointField.h:55:12: error: ‘FLOAT64’ is not a member of ‘pcl::PCLPointField::PointFieldTypes’
+       case ::pcl::PCLPointField::PointFieldTypes::FLOAT64: s << "  FLOAT64" << std::endl; break;
+
+把PCL相关的库放进eros_node_clean项目下时是可以成功编译的。编译报错初看是一堆毫不相干或莫须有的语法错误，但仔细看会发现PCL和libEcovacs冲突的文件都是BOOL相关的。进而发现是它们都对BOOL这个名字进行了定义，一个是作为int的别名，另一个是作为16的枚举变量，因而造成了重复的、不一致的定义。解决办法是对任一个修改命名。例如把PCL中用到的所有枚举型BOOL改为BOOLPCL。
+
+
+
+>> declaration does not declare anything
+/home/brent/brentj/goat_repo/ecovacs/apps/eros_application/eros_prebuilts/build-dep/goat/base/px3/usr/include/libcf/cf_common.h:48:21: error: declaration does not declare anything [-fpermissive]
+ #define int64  long long
+有以下解决方案
+1.加上  -fpermissive （不太懂）
+2.修改相关头文件include的次序 (亲测可行)
+3.可能有重复定义，修改此文件中define的变量名（如此处的int64），同时修改所有用到它的地方，以和其他文件中定义的“int64”的东西作区分
+
+
+
+>> cp -af libEcovacs.so   /home/brent/brentj/goat_repo/ecovacs/apps/libEcovacs/install/root/usr//lib/
+cp: cannot create regular file '/home/brent/brentj/goat_repo/ecovacs/apps/libEcovacs/install/root/usr//lib/': Not a directory
+build.mk:74: recipe for target 'install' failed
+make[1]: *** [install] Error 1
+分析是/home/brent/brentj/goat_repo/ecovacs/apps/libEcovacs/install/root/usr下的{lib文件夹不被sh语法识别，而dash语法是识别的，故应该是dash reconfigure不成功
+定位到是sudo dpkg-reconfigure dash 不弹窗的问题
+重装dash后问题解决：
+sudo apt-get remove --purge dash
+sudo apt-get update
+sudo apt-get install dash
+sudo ln -sf /bin/dash /bin/sh
+
+
+
+>> 编译通过，但运行时报错
+[W][node_loader.cpp|71] [NODELET]fail to load library: /data/usr/lib/node/liberos_node_clean.so: undefined symbol: _ZN3pcl7PCLBaseINS_8PointXYZEE13setInputCloudERKSt10shared_ptrIKNS_10PointCloudIS1_EEE[F][main.cpp|200] [NODELET] fail to load plugin eros_node_clean, exit!
+
+找到setInputCloud接口所在的库
+可能原因1：没写TARGET_LINK_LIBRARIES等链接到依赖库的语句，没链接上
+可能原因2：编译所用依赖库和运行所用不一致，setInputCloud在运行所用依赖库中不存在
+
+
+
+>> /home/brent/brentj/goat_repo/prebuilts/gcc/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/../lib/gcc/aarch64-none-linux-gnu/10.3.1/../../../../aarch64-none-linux-gnu/bin/ld: cannot find -lpcl_filters
+编译时可能只找结尾为.so的库，不能含有版本号
+将libpcl_filters.so.1.13改名为/软链接为libpcl_filters.so即可

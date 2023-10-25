@@ -1,0 +1,61 @@
+一、PC本身的x86环境中
+1.安装交叉编译虚拟环境工具
+sudo apt install systemd-container
+sudo apt install qemu-user-static
+
+2.下载arm版ubuntu base包
+http://cdimage.ubuntu.com/ubuntu-base/releases/
+找例如：ubuntu-base-18.04.5-base-arm64.tar.gz
+
+3.下载PCL源码
+git clone https://github.com/PointCloudLibrary/pcl.git
+或git clone https://gitcode.net/mirrors/pointcloudlibrary/pcl.git
+
+4.建立虚拟环境
+解压ubuntu base包到ubuntu_arm文件夹
+sudo cp -b /etc/resolv.conf ./ubuntu_arm/etc/resolv.conf
+sudo cp /usr/bin/qemu-arm-static ./ubuntu_arm/usr/bin/
+sudo cp /usr/bin/qemu-aarch64-static ./ubuntu_arm/usr/bin/
+
+5.进入arm环境
+sudo systemd-nspawn -D ubuntu_arm
+
+二、PC上的虚拟arm环境
+以下均在上面建好的ubuntu_arm目录下（root）操作
+
+1.更新 Ubuntu 系统中的软件包列表
+sudo apt-get update
+
+2.安装gcc,g++, cmake（如果报没有sudo就不加sudo吧..）
+sudo apt-get install gcc g++
+sudo apt-get install cmake
+
+3.安装PCL
+3.1安装依赖
+>build-esstial
+sudo apt-get install -y build-essential
+>boost
+sudo apt-get install libboost-all-dev
+>eigen
+sudo apt-get install -y libeigen3-dev
+>qhull
+sudo apt-get install -y libqhull-dev
+>flann
+sudo apt-get install -y libflann-dev
+>VTK
+sudo apt-get install -y libvtk5-dev libvtk5.8 libvtkedge-dev
+
+或直接sudo apt-get update
+sudo apt-get install libpcl-all
+
+3.2 PCL编译安装
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+
+三、板子上运行
+把编好的可执行文件拷到板子上
+ldd $文件名 | more 查看缺少的动态库
+从PC上的虚拟arm环境上把缺少的库拷过来即可

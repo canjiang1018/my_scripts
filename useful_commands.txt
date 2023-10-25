@@ -49,3 +49,62 @@ ${PCL_LIBRARIES}
 >>查看二进制文件/其他文件的二进制形式内容
 hexdump $文件名
 hexdump $文件名 | more          显示开头，逐渐翻页
+
+>> 串口进入板子
+sudo minicom
+
+>> 查看板子ip
+ifconfig
+找到wlan对应的inet addr
+
+>> 修改板子联网信息
+vi /etc/wpa_supplicant.conf
+ssid为网络名称
+psk为密码
+
+>> ubuntu查无线网卡后网络列表为空
+可能是缺少网卡驱动
+sudo apt-get install bcmwl-kernel-source
+（在下列操作之前可以先打开software&update -> Download from改为清华源）
+#检查可用更新包
+sudo apt-get update
+#更新已安装的软件包
+sudo apt-get upgrade
+
+然后一定要重启才能生效！！！
+
+>> rk3588固件烧录
+PC上mount后修改image：
+sudo mount rootfs_large.img rootfs
+sudo umount rootfs
+板子上重启并进入烧录模式：
+reboot loader
+PC和板子用USB相连后执行烧录命令：
+sudo ./rkdeveloptool wlx data rootfs_large.img
+sudo ./rkdeveloptool rd
+
+>> 查看所有含xxx字段的进程
+ps -ef | grep xxx
+结果示例：
+root       665   662  0 02:33 ?        00:00:01 medusa -f /tmp/deebot_3588.conf
+root      1176     1  0 02:34 ?        00:00:00 /bin/sh /data/autostart/deebot.sh start
+root      1178  1176  6 02:34 ?        00:00:13 deebot /etc/conf/tdkimu_node.json
+root      1179  1176  6 02:34 ?        00:00:13 deebot /etc/conf/work_node.json
+root      1180  1176  5 02:34 ?        00:00:09 deebot /data/usr/lib/node/dxai_node.json
+root      3720  1673  0 02:37 pts/0    00:00:00 grep deebot
+/etc/conf/tdkimu_node.json是对应的配置文件
+
+>> 查看对应进程的配置文件（如/etc/conf/work_node.json）中的"log_file"和"stdout_file"名，找到并打开log文件，来进行debug
+
+>> 杀掉当前正在运行的程序
+killall deebot
+rm /tmp/deebot_kill_upload_log.mark
+启动新配置路径的程序
+/data/autostart/deebot.sh start
+
+>> 启动鱼眼和tof相机
+mdsctl camera0 '{"stream_on":1}' && mdsctl camera1 '{"stream_on":1}'
+mdsctl camera0 '{"stream_on":1, "type":"relocate"}'&&mdsctl camera1 '{"stream_on":1, "type":"relocate"}'
+
+>> gerrit 提交code
+git push origin HEAD:refs/for/master
